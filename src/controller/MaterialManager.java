@@ -1,78 +1,53 @@
 package controller;
 
-import java.util.Arrays;
+import model.Discount;
+import model.Material;
+
+import java.util.LinkedList;
+import java.util.List;
 
 public class MaterialManager<E> {
-    int size = 0;
-    static final int  DEFAULT_CAPACITY = 10;
-    E materials[];
-    public MaterialManager(){
-        materials = (E[]) new Object[DEFAULT_CAPACITY];
+    public static List<Material> materials = new LinkedList<>();
+
+
+    public void addMaterial(Material material){
+        materials.add(material);
     }
-    public MaterialManager(int size) {
-        materials = (E[]) new Object[size];
-    }
-    public void add(E e) {
-        size += 1;
-        ensureCapa();
-        materials[size - 1] = e;
-    }
-    private void ensureCapa() {
-        if (size > materials.length) {
-            int biggerSize = size * 2 + 1;
-            materials = Arrays.copyOf(materials, biggerSize);
+    public void displayAll(){
+        for (Material m:materials
+        ) {
+            System.out.println(m);
         }
     }
-    public boolean add(E e, int index) {
-        if (index >= 0 && index <= size) {
-            size += 1;
-            ensureCapa();
-            for (int i = size - 2; i >= index; i--) {
-                materials[i + 1] = materials[i];
-            }
-            materials[index] = e;
-            return true;
-        }
-        return false;
+    public void setMaterial(Material material, int index){
+        materials.set(index,material);
     }
-    public int size(){
-        return materials.length;
-    }
-    public E get(int index) {
-        if (index >= 0 && index < size) {
-            return materials[index];
-        }
-        return null;
-    }
-    public boolean contains(E e) {
-        for (E x : materials) {
-            if (e.equals(x)) {
-                return true;
-            }
-        }
-        return false;
+    public void deleteMaterial(int index){
+        materials.remove(index);
     }
 
-    public int indexOf(E o){
-        int index = -1;
-        for (int i = 0; i < materials.length ; i++) {
-            if (materials[i] == o){
-                index = i;
-                break;}
-        }
-        return index;
-    }
-    public boolean remove(int index) {
-        if (index >= 0 && index < size) {
-            for (int i = index; i < size; i++) {
-                materials[i] = materials[i + 1];
+    public double getRealMoney(){
+        double total=0;
+        for (int i = 0; i < materials.size(); i++) {
+            if (materials.get(i) instanceof Discount)
+            {
+                Discount discount = (Discount) materials.get(i);
+                total += discount.getRealMoney();
             }
-            size -= 1;
-            return true;
         }
-        return false;
+        return total;
     }
-    public void set(int index,E e){
-        materials[index] = e;
+    public double getTotalMoney(){
+        double total=0;
+        for (int i = 0; i < materials.size(); i++) {
+            total += materials.get(i).getAmount();
+        }
+        return total;
+    }
+
+    // tinh chenh lech
+    public double getDifference(){
+        double difference = getTotalMoney() - getRealMoney();
+        return difference;
     }
 }

@@ -44,4 +44,15 @@ public class CrispyFlour extends Material implements Discount {
         LocalDate now = LocalDate.now();
         return CalculateDate.calculateDays(getExpiryDate().getDayOfMonth(),getExpiryDate().getMonthValue(),getExpiryDate().getYear()) - CalculateDate.calculateDays(now.getDayOfMonth(),now.getMonthValue(),now.getYear()) <= 120;
     }
+
+    @Override
+    public String toString() {
+        return "model.CrispyFlour{" +
+                ", id='" + getId() + '\'' +
+                ", name='" + getName() + '\'' +
+                ", manufacturingDate=" + getManufacturingDate() +
+                ", cost=" + getCost() +
+                ", quantity=" + quantity +
+                '}';
+    }
 }

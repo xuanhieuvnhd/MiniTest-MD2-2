@@ -44,4 +44,15 @@ public class Meat extends Material implements Discount {
         LocalDate now = LocalDate.now();
         return CalculateDate.calculateDays(getExpiryDate().getDayOfMonth(),getExpiryDate().getMonthValue(),getExpiryDate().getYear()) - CalculateDate.calculateDays(now.getDayOfMonth(),now.getMonthValue(),now.getYear()) <= 5;
     }
+
+    @Override
+    public String toString() {
+        return "model.Meat{" +
+                ", id='" + getId() + '\'' +
+                ", name='" + getName() + '\'' +
+                ", manufacturingDate=" + getManufacturingDate() +
+                ", cost=" + getCost() +
+                ", weight=" + weight +
+                '}';
+    }
 }
