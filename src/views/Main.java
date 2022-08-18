@@ -6,61 +6,43 @@ import model.Material;
 import model.Meat;
 
 import java.time.LocalDate;
+
 public class Main {
     public static void main(String[] args) {
-        CrispyFlour botMi = new CrispyFlour("1","Bot mi", LocalDate.of(2022,7,8), 10000, 5);
-        CrispyFlour botGao = new CrispyFlour("2","Bot gao", LocalDate.of(2021,12,21), 10000, 4);
-        CrispyFlour botTom = new CrispyFlour("3","Bot tom", LocalDate.of(2021,4,7), 10000, 3);
-        CrispyFlour botNgo = new CrispyFlour("4","Bot ngo", LocalDate.of(2020,7,7), 10000, 7);
-        CrispyFlour botSan = new CrispyFlour("5","Bot san", LocalDate.of(2022,1,15), 10000, 4);
-        Meat thiGa = new Meat("6","Thi ga", LocalDate.of(2022,8,15), 70000, 2);
-        Meat thiLon = new Meat("7","Thi lon", LocalDate.of(2022,7,14), 100000, 5);
-        Meat thiVit = new Meat("8","Thi vit", LocalDate.of(2022,8,12), 60000, 1);
-        Meat thiCa = new Meat("9","Thi ca", LocalDate.of(2022,8,16), 80000, 3);
-        Meat thiBo = new Meat("10","Thi bo", LocalDate.of(2022,7,17), 120000, 4);
-        MaterialManager<Material> materialManager = new MaterialManager<>();
-        materialManager.add(botMi);
-        materialManager.add(botGao);
-        materialManager.add(botTom);
-        materialManager.add(botNgo);
-        materialManager.add(botSan);
-        materialManager.add(thiGa);
-        materialManager.add(thiLon);
-        materialManager.add(thiVit);
-        materialManager.add(thiCa);
-        materialManager.add(thiBo);
-        System.out.println("Chenh lech tien thuc te trong ngay la: ");
-        System.out.println(moneyDayDifference(materialManager));
+        Material botMi = new CrispyFlour("01", "Bot Mi", getLocalDate(2022, 8, 15), 20000, 10);
+        Material botTom = new CrispyFlour("02", "Bot Tom", getLocalDate(2021, 7, 15), 2000, 99);
+        Material botThongCong = new CrispyFlour("03", "Bot Thong Cong", getLocalDate(2022, 6, 15), 15000, 60);
+        Material botDa = new CrispyFlour("04", "Bot Da", getLocalDate(2022, 5, 15), 200000, 100);
+        Material botCanh = new CrispyFlour("05", "bot Canh", getLocalDate(2022, 4, 16), 200000, 60);
+
+        Material thitNhau = new Meat("01", "Thit Nhau", getLocalDate(2022, 1, 15), 500000, 50);
+        Material thitNguoi = new Meat("02", "Thit Nguoi", getLocalDate(2022, 2, 15), 5000000, 1);
+        Material thitChuot = new Meat("03", "Thit Chuot", getLocalDate(2022, 3, 15), 50000, 2);
+        Material thitLon = new Meat("04", "Thit Lon", getLocalDate(2022, 4, 15), 130000, 3);
+        Material thitHeo = new Meat("05", "Thit Heo", getLocalDate(2022, 5, 15), 130000, 4);
+        Material thitH = new Meat("?", "Thit Heo", getLocalDate(2022, 5, 15), 130000, 4);
+        MaterialManager materialManage = new MaterialManager();
+
+        materialManage.addMaterial(botMi);
+        materialManage.addMaterial(botTom);
+        materialManage.addMaterial(botThongCong);
+        materialManage.addMaterial(botDa);
+        materialManage.addMaterial(botCanh);
+        materialManage.addMaterial(thitNhau);
+        materialManage.addMaterial(thitNguoi);
+        materialManage.addMaterial(thitChuot);
+        materialManage.addMaterial(thitLon);
+        materialManage.addMaterial(thitHeo);
+
+        materialManage.displayAll();
+
+        System.out.println(materialManage.getRealMoney());
+        System.out.println(materialManage.getDifference());
+
+
     }
-    static double moneyDayDifference(MaterialManager material){
-        return getSum(material) - getSumReal(material);
-    }
-    static double getSum(MaterialManager material){
-        double sum =0.0;
-        for (int i = 0; i < material.size(); i++) {
-            if (material.get(i) instanceof CrispyFlour){
-                CrispyFlour crispyFlour = (CrispyFlour) material.get(i);
-                sum += crispyFlour.getAmount();
-            }
-            else {
-                Meat meat = (Meat) material.get(i);
-                sum+= meat.getAmount();
-            }
-        }
-        return sum;
-    }
-    static double getSumReal(MaterialManager material){
-        double sumReal = 0.0;
-        for (int i = 0; i < material.size(); i++) {
-            if (material.get(i) instanceof CrispyFlour){
-                CrispyFlour crispyFlour = (CrispyFlour) material.get(i);
-                sumReal+= crispyFlour.getRealMoney();
-            }
-            else {
-                Meat meat = (Meat) material.get(i);
-                sumReal+= meat.getRealMoney();
-            }
-        }
-        return sumReal;
+
+    private static LocalDate getLocalDate(int year, int month, int day) {
+        return LocalDate.of(year, month, day);
     }
 }
